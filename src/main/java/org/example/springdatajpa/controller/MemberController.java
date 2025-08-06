@@ -1,15 +1,13 @@
 package org.example.springdatajpa.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springdatajpa.dto.MemberResponseDto;
 import org.example.springdatajpa.dto.SignUpReponseDto;
 import org.example.springdatajpa.dto.SignUpRequestDto;
 import org.example.springdatajpa.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/members")
@@ -25,4 +23,13 @@ public class MemberController {
 
         return new ResponseEntity<>(signUpReponseDto,HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id) {
+
+        MemberResponseDto memberResponseDto = memberService.findById(id);
+
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+
 }
