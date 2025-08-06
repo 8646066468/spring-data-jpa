@@ -2,6 +2,7 @@ package org.example.springdatajpa.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springdatajpa.dto.BoardResponseDto;
+import org.example.springdatajpa.dto.BoardWithAgeResponseDto;
 import org.example.springdatajpa.entity.Board;
 import org.example.springdatajpa.entity.Member;
 import org.example.springdatajpa.repository.BoardRepository;
@@ -34,5 +35,12 @@ public class BoardService {
                 .stream()
                 .map(BoardResponseDto::toDto)
                 .toList();
+    }
+
+    public BoardWithAgeResponseDto findById(Long id) {
+        Board findBoard = boardRepository.findByIdOrElseThrow(id);
+        Member writer = findBoard.getMember();
+
+        return new BoardWithAgeResponseDto(findBoard.getTitle(), findBoard.getContents(), writer.getAge());
     }
 }

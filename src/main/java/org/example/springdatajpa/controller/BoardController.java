@@ -2,6 +2,7 @@ package org.example.springdatajpa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springdatajpa.dto.BoardResponseDto;
+import org.example.springdatajpa.dto.BoardWithAgeResponseDto;
 import org.example.springdatajpa.dto.CreateBoardRequestDto;
 import org.example.springdatajpa.service.BoardService;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,14 @@ public class BoardController {
         List<BoardResponseDto> boardResponseDtoList = boardService.findAll();
 
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardWithAgeResponseDto> findById(@PathVariable Long id) {
+
+        BoardWithAgeResponseDto boardWithAgeResponseDto = boardService.findById(id);
+
+        return new ResponseEntity<>(boardWithAgeResponseDto, HttpStatus.OK);
     }
 
 }
