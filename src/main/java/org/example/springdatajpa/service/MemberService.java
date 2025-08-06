@@ -1,6 +1,7 @@
 package org.example.springdatajpa.service;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.springdatajpa.dto.MemberResponseDto;
 import org.example.springdatajpa.dto.SignUpReponseDto;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    @Transactional
     public SignUpReponseDto signUp(String username, String password, Integer age) {
 
         Member member= new Member(username,password,age);
@@ -24,7 +25,7 @@ public class MemberService {
         Member savedMember= memberRepository.save(member);
         return new SignUpReponseDto(savedMember.getId(),savedMember.getUsername(),savedMember.getAge());
     }
-
+    @Transactional
     public MemberResponseDto findById(Long id) {
 
         Optional<Member> optionalMember = memberRepository.findById(id);
@@ -40,7 +41,7 @@ public class MemberService {
     }
 
 
-
+    @Transactional
     public void updatePassword(Long id, String oldPassword, String newPassword) {
 
         Member findMember = memberRepository.findByIdOrElseThrow(id);
