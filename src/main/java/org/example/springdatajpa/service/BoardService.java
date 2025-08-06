@@ -43,4 +43,11 @@ public class BoardService {
 
         return new BoardWithAgeResponseDto(findBoard.getTitle(), findBoard.getContents(), writer.getAge());
     }
+
+    public void delete(Long id) {
+
+        Board findBoard = boardRepository.findByIdOrElseThrow(id);
+
+        boardRepository.delete(findBoard);
+    }
 }
