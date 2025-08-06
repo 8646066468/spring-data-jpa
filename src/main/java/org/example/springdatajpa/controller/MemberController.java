@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springdatajpa.dto.MemberResponseDto;
 import org.example.springdatajpa.dto.SignUpReponseDto;
 import org.example.springdatajpa.dto.SignUpRequestDto;
+import org.example.springdatajpa.dto.UpdatePasswordRequestDto;
 import org.example.springdatajpa.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,17 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.findById(id);
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updatePassword(
+            @PathVariable Long id,
+            @RequestBody UpdatePasswordRequestDto requestDto
+    ) {
+
+        memberService.updatePassword(id, requestDto.getOldPassword(), requestDto.getNewPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

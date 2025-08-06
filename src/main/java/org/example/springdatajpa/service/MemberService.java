@@ -38,4 +38,17 @@ public class MemberService {
 
         return new MemberResponseDto(findMember.getUsername(), findMember.getAge());
     }
+
+
+
+    public void updatePassword(Long id, String oldPassword, String newPassword) {
+
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+
+        if (!findMember.getPassword().equals(oldPassword)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+        }
+
+        findMember.updatePassword(newPassword);
+    }
 }
