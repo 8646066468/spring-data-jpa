@@ -8,6 +8,8 @@ import org.example.springdatajpa.repository.BoardRepository;
 import org.example.springdatajpa.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -27,4 +29,10 @@ public class BoardService {
         return new BoardResponseDto(board.getId(), board.getTitle(), board.getContents());
     }
 
+    public List<BoardResponseDto> findAll() {
+        return boardRepository.findAll()
+                .stream()
+                .map(BoardResponseDto::toDto)
+                .toList();
+    }
 }
